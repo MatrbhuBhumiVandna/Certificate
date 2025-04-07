@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>માતૃભૂમિ વંદના ટ્રસ્ટ - યોગદાન સર્ટિફિકેટ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 40px);
+        }
+        .form-container {
+            flex: 0 0 400px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .preview-container {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #FF9933; /* Saffron color */
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #444;
+            font-size: 14px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .btn-download {
+            background-color: #2196F3;
+            color: white;
+        }
+        .btn-download:hover {
+            background-color: #0b7dda;
+        }
+        .btn-reset-font {
+            background-color: #607d8b;
+            color: white;
+        }
+        .btn-reset-font:hover {
+            background-color: #455a64;
+        }
+        .btn-reset-all {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-reset-all:hover {
+            background-color: #da190b;
+        }
+        #certificateCanvas {
+            max-width: 100%;
+            max-height: calc(100% - 40px);
+            object-fit: contain;
+            margin: 0 auto;
+            border: 1px solid #eee;
+        }
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .font-size-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        .font-size-control input[type="range"] {
+            flex-grow: 1;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            -webkit-appearance: none;
+        }
+        .font-size-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #2196F3;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .font-size-value {
+            width: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .position-controls {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .position-control-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .position-control {
+            flex: 1;
+        }
+        .position-control label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .position-control input {
+            width: 100%;
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="form-container">
+            <div class="header">માતૃભૂમિ વંદના ટ્રસ્ટ - યોગદાન સર્ટિફિકેટ</div>
+            
+            <div class="form-group">
+                <label for="field1">પૂરું નામ (Full Name)</label>
+                <input type="text" id="field1" placeholder="Enter full name">
+                <div class="font-size-control">
+                    <input type="range" id="size1" min="20" max="100" value="60">
+                    <span class="font-size-value">60px</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="field2">પૂરું નામ-2 (Full Name-2)</label>
+                <input type="text" id="field2" placeholder="Enter second name">
+                <div class="font-size-control">
+                    <input type="range" id="size2" min="20" max="100" value="60">
+                    <span class="font-size-value">60px</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="field3">ઈંટ ની સંખ્યા (Number of Bricks)</label>
+                <input type="text" id="field3" placeholder="Enter number of bricks">
+                <div class="font-size-control">
+                    <input type="range" id="size3" min="20" max="100" value="60">
+                    <span class="font-size-value">60px</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="field4">યોગદાન (Donation)</label>
+                <input type="text" id="field4" placeholder="Auto-calculated" readonly>
+                <div class="font-size-control">
+                    <input type="range" id="size4" min="20" max="100" value="60">
+                    <span class="font-size-value">60px</span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-download" id="formDownloadBtn">Download</button>
+                <button class="btn-reset-font" id="formResetFontBtn">Reset Font Size</button>
+                <button class="btn-reset-all" id="formResetBtn">Reset All Data</button>
+            </div>
+
+            <div class="position-controls">
+                <h3>Position Adjustment</h3>
+                
+                <div class="position-control-group">
+                    <div class="position-control">
+                        <label>Field 1 X</label>
+                        <input type="number" id="pos1x" value="430">
+                    </div>
+                    <div class="position-control">
+                        <label>Field 1 Y</label>
+                        <input type="number" id="pos1y" value="1510">
+                    </div>
+                </div>
+                
+                <div class="position-control-group">
+                    <div class="position-control">
+                        <label>Field 2 X</label>
+                        <input type="number" id="pos2x" value="430">
+                    </div>
+                    <div class="position-control">
+                        <label>Field 2 Y</label>
+                        <input type="number" id="pos2y" value="1590">
+                    </div>
+                </div>
+                
+                <div class="position-control-group">
+                    <div class="position-control">
+                        <label>Field 3 X</label>
+                        <input type="number" id="pos3x" value="760">
+                    </div>
+                    <div class="position-control">
+                        <label>Field 3 Y</label>
+                        <input type="number" id="pos3y" value="1690">
+                    </div>
+                </div>
+                
+                <div class="position-control-group">
+                    <div class="position-control">
+                        <label>Field 4 X</label>
+                        <input type="number" id="pos4x" value="1111">
+                    </div>
+                    <div class="position-control">
+                        <label>Field 4 Y</label>
+                        <input type="number" id="pos4y" value="1690">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <canvas id="certificateCanvas" width="2480" height="3508"></canvas>
+            <div class="preview-actions">
+                <button class="btn-download" id="downloadBtn">Download</button>
+                <button class="btn-reset-all" id="resetBtn">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('certificateCanvas');
+            const ctx = canvas.getContext('2d');
+            const field1Input = document.getElementById('field1');
+            const field2Input = document.getElementById('field2');
+            const field3Input = document.getElementById('field3');
+            const field4Input = document.getElementById('field4');
+            
+            // Font size controls
+            const size1 = document.getElementById('size1');
+            const size2 = document.getElementById('size2');
+            const size3 = document.getElementById('size3');
+            const size4 = document.getElementById('size4');
+            const sizeValue1 = size1.nextElementSibling;
+            const sizeValue2 = size2.nextElementSibling;
+            const sizeValue3 = size3.nextElementSibling;
+            const sizeValue4 = size4.nextElementSibling;
+            
+            // Position controls
+            const pos1x = document.getElementById('pos1x');
+            const pos1y = document.getElementById('pos1y');
+            const pos2x = document.getElementById('pos2x');
+            const pos2y = document.getElementById('pos2y');
+            const pos3x = document.getElementById('pos3x');
+            const pos3y = document.getElementById('pos3y');
+            const pos4x = document.getElementById('pos4x');
+            const pos4y = document.getElementById('pos4y');
+            
+            // Buttons
+            const downloadBtn = document.getElementById('downloadBtn');
+            const formDownloadBtn = document.getElementById('formDownloadBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const formResetBtn = document.getElementById('formResetBtn');
+            const formResetFontBtn = document.getElementById('formResetFontBtn');
+            
+            // Load the certificate image
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = 'certificate.png'; // Replace with your image path
+            
+            img.onload = function() {
+                // Initial draw
+                drawCertificate();
+                
+                // Real-time updates for all fields
+                field1Input.addEventListener('input', drawCertificate);
+                field2Input.addEventListener('input', drawCertificate);
+                field3Input.addEventListener('input', function() {
+                    const brickCount = parseFloat(field3Input.value) || 0;
+                    field4Input.value = (brickCount * 2500).toLocaleString();
+                    drawCertificate();
+                });
+                
+                // Font size change handlers
+                size1.addEventListener('input', function() {
+                    sizeValue1.textContent = this.value + 'px';
+                    drawCertificate();
+                });
+                size2.addEventListener('input', function() {
+                    sizeValue2.textContent = this.value + 'px';
+                    drawCertificate();
+                });
+                size3.addEventListener('input', function() {
+                    sizeValue3.textContent = this.value + 'px';
+                    drawCertificate();
+                });
+                size4.addEventListener('input', function() {
+                    sizeValue4.textContent = this.value + 'px';
+                    drawCertificate();
+                });
+                
+                // Position change handlers
+                pos1x.addEventListener('input', drawCertificate);
+                pos1y.addEventListener('input', drawCertificate);
+                pos2x.addEventListener('input', drawCertificate);
+                pos2y.addEventListener('input', drawCertificate);
+                pos3x.addEventListener('input', drawCertificate);
+                pos3y.addEventListener('input', drawCertificate);
+                pos4x.addEventListener('input', drawCertificate);
+                pos4y.addEventListener('input', drawCertificate);
+                
+                // Download button click handlers
+                function downloadCertificate() {
+                    const link = document.createElement('a');
+                    const fileName = field1Input.value ? 
+                        field1Input.value.replace(/\s+/g, '_') + '_certificate.jpg' : 
+                        'certificate.jpg';
+                    link.download = fileName;
+                    link.href = canvas.toDataURL('image/jpeg', 0.9);
+                    link.click();
+                }
+                
+                downloadBtn.addEventListener('click', downloadCertificate);
+                formDownloadBtn.addEventListener('click', downloadCertificate);
+                
+                // Reset buttons
+                function resetForm() {
+                    field1Input.value = '';
+                    field2Input.value = '';
+                    field3Input.value = '';
+                    field4Input.value = '';
+                    drawCertificate();
+                }
+                
+                function resetFontSizes() {
+                    size1.value = 60;
+                    size2.value = 60;
+                    size3.value = 60;
+                    size4.value = 60;
+                    sizeValue1.textContent = '60px';
+                    sizeValue2.textContent = '60px';
+                    sizeValue3.textContent = '60px';
+                    sizeValue4.textContent = '60px';
+                    drawCertificate();
+                }
+                
+                function resetAll() {
+                    resetForm();
+                    resetFontSizes();
+                    // Reset positions to default
+                    pos1x.value = 430;
+                    pos1y.value = 1510;
+                    pos2x.value = 430;
+                    pos2y.value = 1590;
+                    pos3x.value = 760;
+                    pos3y.value = 1690;
+                    pos4x.value = 1111;
+                    pos4y.value = 1690;
+                    drawCertificate();
+                }
+                
+                resetBtn.addEventListener('click', resetAll);
+                formResetBtn.addEventListener('click', resetAll);
+                formResetFontBtn.addEventListener('click', resetFontSizes);
+            };
+            
+            function drawCertificate() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw the certificate image
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Set text style (RED color for all added text)
+                ctx.fillStyle = '#FF0000'; // Red color
+                ctx.textAlign = 'left';
+                
+                // Draw Field 1
+                if (field1Input.value) {
+                    ctx.font = `bold ${size1.value}px Arial`;
+                    ctx.fillText(field1Input.value, parseInt(pos1x.value), parseInt(pos1y.value));
+                }
+                
+                // Draw Field 2
+                if (field2Input.value) {
+                    ctx.font = `bold ${size2.value}px Arial`;
+                    ctx.fillText(field2Input.value, parseInt(pos2x.value), parseInt(pos2y.value));
+                }
+                
+                // Draw Field 3
+                if (field3Input.value) {
+                    ctx.font = `bold ${size3.value}px Arial`;
+                    ctx.fillText(field3Input.value, parseInt(pos3x.value), parseInt(pos3y.value));
+                }
+                
+                // Draw Field 4
+                if (field4Input.value) {
+                    ctx.font = `bold ${size4.value}px Arial`;
+                    ctx.fillText(field4Input.value, parseInt(pos4x.value), parseInt(pos4y.value));
+                }
+            }
+        });
+    </script>
+</body>
+</html>

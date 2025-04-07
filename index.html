@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .form-container {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .preview-container {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        #downloadBtn {
+            background-color: #2196F3;
+            color: white;
+        }
+        #downloadBtn:hover {
+            background-color: #0b7dda;
+        }
+        #resetBtn {
+            background-color: #f44336;
+            color: white;
+        }
+        #resetBtn:hover {
+            background-color: #da190b;
+        }
+        #certificateCanvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Certificate Generator</h1>
+    
+    <div class="main-container">
+        <div class="form-container">
+            <div class="form-group">
+                <label for="field1">પૂરું નામ (Full Name)</label>
+                <input type="text" id="field1" placeholder="Enter full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="field2">પૂરું નામ-2 (Full Name-2)</label>
+                <input type="text" id="field2" placeholder="Enter second name">
+            </div>
+            
+            <div class="form-group">
+                <label for="field3">ઈંટ ની સંખ્યા (Number of Bricks)</label>
+                <input type="text" id="field3" placeholder="Enter number of bricks">
+            </div>
+            
+            <div class="form-group">
+                <label for="field4">યોગદાન (Donation)</label>
+                <input type="text" id="field4" placeholder="Auto-calculated" readonly>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <h2 class="preview-title">Certificate Preview</h2>
+            <canvas id="certificateCanvas" width="2480" height="3508"></canvas>
+            
+            <div class="button-group">
+                <button id="downloadBtn">Download as JPEG</button>
+                <button id="resetBtn">Reset Form</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('certificateCanvas');
+            const ctx = canvas.getContext('2d');
+            const field1Input = document.getElementById('field1');
+            const field2Input = document.getElementById('field2');
+            const field3Input = document.getElementById('field3');
+            const field4Input = document.getElementById('field4');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            
+            // Load the certificate image
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = 'certificate.png'; // Replace with your image path
+            
+            img.onload = function() {
+                // Initial draw
+                drawCertificate();
+                
+                // Real-time updates for all fields
+                field1Input.addEventListener('input', drawCertificate);
+                field2Input.addEventListener('input', drawCertificate);
+                field3Input.addEventListener('input', function() {
+                    const brickCount = parseFloat(field3Input.value) || 0;
+                    field4Input.value = (brickCount * 2500).toLocaleString();
+                    drawCertificate();
+                });
+                
+                // Download button click handler
+                downloadBtn.addEventListener('click', function() {
+                    const link = document.createElement('a');
+                    link.download = 'certificate.jpg';
+                    link.href = canvas.toDataURL('image/jpeg', 0.9);
+                    link.click();
+                });
+                
+                // Reset button click handler
+                resetBtn.addEventListener('click', function() {
+                    field1Input.value = '';
+                    field2Input.value = '';
+                    field3Input.value = '';
+                    field4Input.value = '';
+                    drawCertificate();
+                });
+            };
+            
+            function drawCertificate() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw the certificate image
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Set text style
+                ctx.font = 'bold 60px Arial';
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'left';
+                
+                // Draw Field 1 at (430, 1510) - પૂરું નામ
+                if (field1Input.value) {
+                    ctx.fillText(field1Input.value, 430, 1510);
+                }
+                
+                // Draw Field 2 at (430, 1590) - પૂરું નામ-2
+                if (field2Input.value) {
+                    ctx.fillText(field2Input.value, 430, 1590);
+                }
+                
+                // Draw Field 3 at (760, 1690) - ઈંટ ની સંખ્યા
+                if (field3Input.value) {
+                    ctx.fillText(field3Input.value, 760, 1690);
+                }
+                
+                // Draw Field 4 at (1111, 1690) - યોગદાન (auto-calculated)
+                if (field4Input.value) {
+                    ctx.fillText(field4Input.value, 1111, 1690);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

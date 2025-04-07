@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>માતૃભૂમિ વંદના ટ્રસ્ટ - યોગદાન સર્ટિફિકેટ</title>
+    <style>
+        :root {
+            --primary-color: #FF9933;
+            --secondary-color: #2196F3;
+            --danger-color: #f44336;
+            --gray-color: #607d8b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        .main-title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .main-container {
+            display: flex;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 90px);
+        }
+        .form-container {
+            flex: 0 0 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .form-header {
+            text-align: center;
+            margin: 0 0 20px 0;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0b7dda;
+        }
+        .btn-gray {
+            background-color: var(--gray-color);
+            color: white;
+        }
+        .btn-gray:hover {
+            background-color: #455a64;
+        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #da190b;
+        }
+        .btn-large {
+            padding: 12px 20px;
+            font-size: 15px;
+        }
+        #certificateCanvas {
+            max-width: 100%;
+            max-height: calc(100% - 50px);
+            object-fit: contain;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .controls-section {
+            margin: 20px 0 0 0;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .controls-section h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .color-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .color-picker {
+            width: 40px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .font-size-control {
+            margin-top: 15px;
+        }
+        .font-size-slider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .font-size-slider input {
+            flex-grow: 1;
+        }
+        .position-controls {
+            margin-top: 5px;
+        }
+        .position-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            position: relative;
+        }
+        .position-group h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        .position-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .position-field {
+            display: flex;
+            flex-direction: column;
+        }
+        .position-field label {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .position-reset {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 12px;
+        }
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .form-actions-row {
+            display: flex;
+            gap: 10px;
+        }
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--secondary-color);
+            font-size: 14px;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-title">માતૃભૂમિ વંદના ટ્રસ્ટ - યોગદાન સર્ટિફિકેટ</div>
+    
+    <div class="main-container">
+        <div class="form-container">
+            <div class="form-header">જરૂરી ડેટા અહીં ભરો</div>
+            
+            <div class="form-group">
+                <label for="field1">પૂરું નામ (Full Name)</label>
+                <input type="text" id="field1" placeholder="Enter full name" tabindex="1">
+            </div>
+            
+            <div class="form-group">
+                <label for="field2">પૂરું નામ-2 (Full Name-2)</label>
+                <input type="text" id="field2" placeholder="Enter second name" tabindex="2">
+            </div>
+            
+            <div class="form-group">
+                <label for="field3">ઈંટ ની સંખ્યા (Number of Bricks)</label>
+                <input type="text" id="field3" placeholder="Enter number of bricks" tabindex="3">
+            </div>
+            
+            <div class="form-group">
+                <label for="field4">યોગદાન (Donation)</label>
+                <input type="text" id="field4" placeholder="Auto-calculated" readonly>
+            </div>
+
+            <div class="controls-section">
+                <h3>Text Color</h3>
+                <div class="color-control">
+                    <input type="color" id="fontColor" value="#FF0000" class="color-picker">
+                    <span id="colorValue">#FF0000</span>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3>Font Size: <span id="fontSizeValue">66px</span></h3>
+                <div class="font-size-control">
+                    <input type="range" id="fontSize" min="40" max="100" value="66" class="font-size-slider">
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3>
+                    Position Adjustment
+                    <button class="toggle-btn" id="togglePositions">[+]</button>
+                </h3>
+                <div id="positionControls" style="display:none">
+                    <div class="position-controls">
+                        <div class="position-group">
+                            <h4>પૂરું નામ (Full Name)</h4>
+                            <button class="position-reset" data-x="pos1x" data-y="pos1y">↻ Reset</button>
+                            <div class="position-fields">
+                                <div class="position-field">
+                                    <label>X Position</label>
+                                    <input type="number" id="pos1x" value="430">
+                                </div>
+                                <div class="position-field">
+                                    <label>Y Position</label>
+                                    <input type="number" id="pos1y" value="1540">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="position-group">
+                            <h4>પૂરું નામ-2 (Full Name-2)</h4>
+                            <button class="position-reset" data-x="pos2x" data-y="pos2y">↻ Reset</button>
+                            <div class="position-fields">
+                                <div class="position-field">
+                                    <label>X Position</label>
+                                    <input type="number" id="pos2x" value="430">
+                                </div>
+                                <div class="position-field">
+                                    <label>Y Position</label>
+                                    <input type="number" id="pos2y" value="1620">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="position-group">
+                            <h4>ઈંટ ની સંખ્યા (Number of Bricks)</h4>
+                            <button class="position-reset" data-x="pos3x" data-y="pos3y">↻ Reset</button>
+                            <div class="position-fields">
+                                <div class="position-field">
+                                    <label>X Position</label>
+                                    <input type="number" id="pos3x" value="800">
+                                </div>
+                                <div class="position-field">
+                                    <label>Y Position</label>
+                                    <input type="number" id="pos3y" value="1700">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="position-group">
+                            <h4>યોગદાન (Donation)</h4>
+                            <button class="position-reset" data-x="pos4x" data-y="pos4y">↻ Reset</button>
+                            <div class="position-fields">
+                                <div class="position-field">
+                                    <label>X Position</label>
+                                    <input type="number" id="pos4x" value="1222">
+                                </div>
+                                <div class="position-field">
+                                    <label>Y Position</label>
+                                    <input type="number" id="pos4y" value="1700">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="form-actions-row">
+                    <button class="btn-gray" id="resetFontBtn">Reset Font</button>
+                    <button class="btn-danger" id="resetAllBtn">Reset All</button>
+                </div>
+                <button class="btn-primary btn-large" id="downloadBtn">Download Certificate</button>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <canvas id="certificateCanvas" width="2480" height="3508"></canvas>
+            <div class="preview-actions">
+                <button class="btn-primary" id="previewDownloadBtn">Download</button>
+                <button class="btn-danger" id="previewResetBtn">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const canvas = document.getElementById('certificateCanvas');
+            const ctx = canvas.getContext('2d');
+            const fields = {
+                name1: document.getElementById('field1'),
+                name2: document.getElementById('field2'),
+                bricks: document.getElementById('field3'),
+                donation: document.getElementById('field4')
+            };
+            const colorPicker = document.getElementById('fontColor');
+            const colorValue = document.getElementById('colorValue');
+            const fontSizeSlider = document.getElementById('fontSize');
+            const fontSizeValue = document.getElementById('fontSizeValue');
+            const positionControls = document.getElementById('positionControls');
+            const togglePosBtn = document.getElementById('togglePositions');
+            
+            // Position elements
+            const positions = {
+                name1: { x: document.getElementById('pos1x'), y: document.getElementById('pos1y') },
+                name2: { x: document.getElementById('pos2x'), y: document.getElementById('pos2y') },
+                bricks: { x: document.getElementById('pos3x'), y: document.getElementById('pos3y') },
+                donation: { x: document.getElementById('pos4x'), y: document.getElementById('pos4y') }
+            };
+            
+            // Default values
+            const defaults = {
+                color: '#FF0000',
+                fontSize: 66,
+                positions: {
+                    name1: { x: 430, y: 1540 },
+                    name2: { x: 430, y: 1620 },
+                    bricks: { x: 800, y: 1700 },
+                    donation: { x: 1222, y: 1700 }
+                }
+            };
+            
+            // Load certificate image
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = 'certificate.png';
+            
+            img.onload = function() {
+                initControls();
+                drawCertificate();
+            };
+            
+            function initControls() {
+                // Set initial values
+                colorPicker.value = defaults.color;
+                colorValue.textContent = defaults.color;
+                fontSizeSlider.value = defaults.fontSize;
+                fontSizeValue.textContent = defaults.fontSize + 'px';
+                
+                // Set default positions
+                Object.keys(defaults.positions).forEach(field => {
+                    positions[field].x.value = defaults.positions[field].x;
+                    positions[field].y.value = defaults.positions[field].y;
+                });
+                
+                // Event listeners
+                // Input fields
+                Object.values(fields).forEach(field => {
+                    if (field.id !== 'field4') {
+                        field.addEventListener('input', drawCertificate);
+                    }
+                });
+                
+                // Bricks calculation
+                fields.bricks.addEventListener('input', function() {
+                    const count = parseFloat(this.value) || 0;
+                    fields.donation.value = (count * 2500).toLocaleString();
+                    drawCertificate();
+                });
+                
+                // Color picker
+                colorPicker.addEventListener('input', function() {
+                    colorValue.textContent = this.value;
+                    drawCertificate();
+                });
+                
+                // Font size
+                fontSizeSlider.addEventListener('input', function() {
+                    fontSizeValue.textContent = this.value + 'px';
+                    drawCertificate();
+                });
+                
+                // Position controls toggle - SIMPLIFIED AND GUARANTEED TO WORK
+                togglePosBtn.addEventListener('click', function() {
+                    if (positionControls.style.display === 'none') {
+                        positionControls.style.display = 'block';
+                        this.textContent = '[-]';
+                    } else {
+                        positionControls.style.display = 'none';
+                        this.textContent = '[+]';
+                    }
+                });
+                
+                // Position reset buttons
+                document.querySelectorAll('.position-reset').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const fieldKey = this.parentElement.querySelector('h4').textContent.includes('નામ-2') ? 'name2' :
+                                        this.parentElement.querySelector('h4').textContent.includes('નામ') ? 'name1' :
+                                        this.parentElement.querySelector('h4').textContent.includes('ઈંટ') ? 'bricks' : 'donation';
+                        positions[fieldKey].x.value = defaults.positions[fieldKey].x;
+                        positions[fieldKey].y.value = defaults.positions[fieldKey].y;
+                        drawCertificate();
+                    });
+                });
+                
+                // Reset buttons
+                document.getElementById('resetFontBtn').addEventListener('click', function() {
+                    colorPicker.value = defaults.color;
+                    colorValue.textContent = defaults.color;
+                    fontSizeSlider.value = defaults.fontSize;
+                    fontSizeValue.textContent = defaults.fontSize + 'px';
+                    drawCertificate();
+                });
+                
+                document.getElementById('resetAllBtn').addEventListener('click', resetAll);
+                document.getElementById('previewResetBtn').addEventListener('click', resetAll);
+                
+                // Download buttons
+                document.getElementById('downloadBtn').addEventListener('click', downloadCertificate);
+                document.getElementById('previewDownloadBtn').addEventListener('click', downloadCertificate);
+                
+                // Position input changes
+                Object.values(positions).forEach(pos => {
+                    pos.x.addEventListener('input', drawCertificate);
+                    pos.y.addEventListener('input', drawCertificate);
+                });
+            }
+            
+            function drawCertificate() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw certificate image
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Set text style
+                ctx.fillStyle = colorPicker.value;
+                ctx.textAlign = 'left';
+                const fontSize = fontSizeSlider.value;
+                
+                // Draw fields
+                if (fields.name1.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText(fields.name1.value, 
+                                parseInt(positions.name1.x.value), 
+                                parseInt(positions.name1.y.value));
+                }
+                
+                if (fields.name2.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText(fields.name2.value, 
+                                parseInt(positions.name2.x.value), 
+                                parseInt(positions.name2.y.value));
+                }
+                
+                if (fields.bricks.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText(fields.bricks.value, 
+                                parseInt(positions.bricks.x.value), 
+                                parseInt(positions.bricks.y.value));
+                }
+                
+                if (fields.donation.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText(fields.donation.value, 
+                                parseInt(positions.donation.x.value), 
+                                parseInt(positions.donation.y.value));
+                }
+            }
+            
+            function resetAll() {
+                // Reset form fields
+                fields.name1.value = '';
+                fields.name2.value = '';
+                fields.bricks.value = '';
+                fields.donation.value = '';
+                
+                // Reset visual controls
+                document.getElementById('resetFontBtn').click();
+                
+                // Reset positions
+                Object.keys(defaults.positions).forEach(field => {
+                    positions[field].x.value = defaults.positions[field].x;
+                    positions[field].y.value = defaults.positions[field].y;
+                });
+                
+                drawCertificate();
+            }
+            
+            function downloadCertificate() {
+                const link = document.createElement('a');
+                const fileName = fields.name1.value ? 
+                    `${fields.name1.value.replace(/\s+/g, '_')}_certificate.jpg` : 
+                    'certificate.jpg';
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/jpeg', 0.9);
+                link.click();
+            }
+        });
+    </script>
+</body>
+</html>

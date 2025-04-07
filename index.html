@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .preview-container {
+            position: relative;
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #certificateCanvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+        }
+        .download-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .coordinates-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Certificate Generator</h1>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-group">
+                <label for="field1">Field 1 (Name)</label>
+                <input type="text" id="field1" placeholder="Enter text for Field 1">
+                <div class="coordinates-info">Position: 430px from left, 1510px from top</div>
+            </div>
+            <div class="form-group">
+                <label for="field2">Field 2 (Name)</label>
+                <input type="text" id="field2" placeholder="Enter text for Field 2">
+                <div class="coordinates-info">Position: 760px from left, 1690px from top</div>
+            </div>
+            <div class="form-group">
+                <label for="field3">Field 3 (Name)</label>
+                <input type="text" id="field3" placeholder="Enter text for Field 3">
+                <div class="coordinates-info">Position: 1111px from left, 1690px from top</div>
+            </div>
+            <button id="generateBtn">Generate Certificate</button>
+        </div>
+        
+        <div class="preview-container">
+            <h2>Certificate Preview</h2>
+            <canvas id="certificateCanvas" width="2480" height="3508"></canvas>
+            <div class="download-btn">
+                <button id="downloadBtn">Download as JPEG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('certificateCanvas');
+            const ctx = canvas.getContext('2d');
+            const field1Input = document.getElementById('field1');
+            const field2Input = document.getElementById('field2');
+            const field3Input = document.getElementById('field3');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            // Load the certificate image
+            const img = new Image();
+            img.crossOrigin = 'Anonymous'; // This is needed if the image is from another domain
+            img.src = 'certificate.png'; // Replace with your image path
+            
+            img.onload = function() {
+                // Initial draw
+                drawCertificate();
+                
+                // Generate button click handler
+                generateBtn.addEventListener('click', drawCertificate);
+                
+                // Download button click handler
+                downloadBtn.addEventListener('click', function() {
+                    const link = document.createElement('a');
+                    link.download = 'certificate.jpg';
+                    link.href = canvas.toDataURL('image/jpeg', 0.9);
+                    link.click();
+                });
+            };
+            
+            function drawCertificate() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw the certificate image
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Set text style
+                ctx.font = 'bold 60px Arial';
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'left';
+                
+                // Draw Field 1 at (430, 1510)
+                if (field1Input.value) {
+                    ctx.fillText(field1Input.value, 430, 1510);
+                }
+                
+                // Draw Field 2 at (760, 1690)
+                if (field2Input.value) {
+                    ctx.fillText(field2Input.value, 760, 1690);
+                }
+                
+                // Draw Field 3 at (1111, 1690)
+                if (field3Input.value) {
+                    ctx.fillText(field3Input.value, 1111, 1690);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

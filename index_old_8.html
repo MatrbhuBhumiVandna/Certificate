@@ -92,6 +92,7 @@
         .form-actions-row {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
         .btn-download {
             background-color: #2196F3;
@@ -122,116 +123,6 @@
             margin-top: 15px;
             justify-content: center;
         }
-        
-        /* Common Font Controls */
-        .font-controls {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 6px;
-        }
-        .font-control-group {
-            margin-bottom: 15px;
-        }
-        .font-control-group h4 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            color: #444;
-        }
-        .font-size-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 5px;
-        }
-        .font-size-control input[type="range"] {
-            flex-grow: 1;
-            height: 4px;
-            background: #e0e0e0;
-            border-radius: 2px;
-            -webkit-appearance: none;
-        }
-        .font-size-control input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            background: #2196F3;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .font-size-value {
-            width: 40px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-        }
-        .color-picker {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-        .color-picker label {
-            margin-bottom: 0;
-            font-size: 13px;
-        }
-        .color-picker input {
-            width: 60px;
-            height: 30px;
-            padding: 2px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        /* Position Controls */
-        .position-controls {
-            margin-top: 25px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .position-header {
-            background-color: #607d8b;
-            color: white;
-            padding: 10px 15px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .position-header h3 {
-            margin: 0;
-            font-size: 16px;
-        }
-        .position-content {
-            padding: 15px;
-            background-color: white;
-            display: none;
-        }
-        .position-content.show {
-            display: block;
-        }
-        .position-control-group {
-            margin-bottom: 15px;
-        }
-        .position-control-group h4 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            color: #444;
-        }
-        .position-inputs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .position-input {
-            flex: 1;
-        }
-        .position-input label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 3px;
-        }
         .position-slider {
             display: flex;
             align-items: center;
@@ -259,6 +150,49 @@
             font-size: 12px;
             color: #666;
         }
+        .position-controls {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .position-control-group {
+            margin-bottom: 15px;
+        }
+        .position-control-group h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #444;
+        }
+        .position-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .position-input {
+            flex: 1;
+        }
+        .position-input label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .color-picker-container label {
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -283,99 +217,81 @@
                 <input type="text" id="field4" placeholder="Auto-calculated" readonly>
             </div>
 
-            <!-- Common Font Controls -->
-            <div class="font-controls">
-                <div class="font-control-group">
-                    <h4>Font Size</h4>
-                    <div class="font-size-control">
-                        <input type="range" id="commonFontSize" min="20" max="100" value="66">
-                        <span class="font-size-value">66px</span>
+            <div class="form-actions">
+                <div class="form-actions-row">
+                    <button class="btn-reset-all" id="formResetBtn">Reset All Data</button>
+                    <div class="color-picker-container">
+                        <label for="fontColor">Color:</label>
+                        <input type="color" id="fontColor" value="#FF0000" class="color-picker">
+                    </div>
+                </div>
+                <button class="btn-download" id="formDownloadBtn">Download Certificate</button>
+            </div>
+
+            <div class="position-controls">
+                <h3>Position Adjustment</h3>
+                
+                <div class="position-control-group">
+                    <h4>પૂરું નામ (Full Name)</h4>
+                    <div class="position-inputs">
+                        <div class="position-input">
+                            <label>X Position</label>
+                            <input type="number" id="pos1x" value="430">
+                            <div class="position-slider">
+                                <input type="range" id="pos1x-slider" min="0" max="2000" value="430">
+                                <span class="position-value">430</span>
+                            </div>
+                        </div>
+                        <div class="position-input">
+                            <label>Y Position</label>
+                            <input type="number" id="pos1y" value="1540">
+                            <div class="position-slider">
+                                <input type="range" id="pos1y-slider" min="0" max="3500" value="1540">
+                                <span class="position-value">1540</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="font-control-group">
-                    <h4>Font Color</h4>
-                    <div class="color-picker">
-                        <label for="fontColor">Color:</label>
-                        <input type="color" id="fontColor" value="#FF0000">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button class="btn-download" id="formDownloadBtn">Download Certificate</button>
-                <button class="btn-reset-all" id="formResetBtn">Reset All Data</button>
-            </div>
-
-            <!-- Position Controls (Collapsible) -->
-            <div class="position-controls">
-                <div class="position-header" id="positionHeader">
-                    <h3>Position Adjustment</h3>
-                    <span>+</span>
-                </div>
-                <div class="position-content" id="positionContent">
-                    <div class="position-control-group">
-                        <h4>પૂરું નામ (Full Name)</h4>
-                        <div class="position-inputs">
-                            <div class="position-input">
-                                <label>X Position</label>
-                                <input type="number" id="pos1x" value="430">
-                                <div class="position-slider">
-                                    <input type="range" id="pos1x-slider" min="0" max="2000" value="430">
-                                    <span class="position-value">430</span>
-                                </div>
+                <div class="position-control-group">
+                    <h4>ઈંટ ની સંખ્યા (Number of Bricks)</h4>
+                    <div class="position-inputs">
+                        <div class="position-input">
+                            <label>X Position</label>
+                            <input type="number" id="pos3x" value="800">
+                            <div class="position-slider">
+                                <input type="range" id="pos3x-slider" min="0" max="2000" value="800">
+                                <span class="position-value">800</span>
                             </div>
-                            <div class="position-input">
-                                <label>Y Position</label>
-                                <input type="number" id="pos1y" value="1540">
-                                <div class="position-slider">
-                                    <input type="range" id="pos1y-slider" min="0" max="3500" value="1540">
-                                    <span class="position-value">1540</span>
-                                </div>
+                        </div>
+                        <div class="position-input">
+                            <label>Y Position</label>
+                            <input type="number" id="pos3y" value="1700">
+                            <div class="position-slider">
+                                <input type="range" id="pos3y-slider" min="0" max="3500" value="1700">
+                                <span class="position-value">1700</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="position-control-group">
-                        <h4>ઈંટ ની સંખ્યા (Number of Bricks)</h4>
-                        <div class="position-inputs">
-                            <div class="position-input">
-                                <label>X Position</label>
-                                <input type="number" id="pos3x" value="800">
-                                <div class="position-slider">
-                                    <input type="range" id="pos3x-slider" min="0" max="2000" value="800">
-                                    <span class="position-value">800</span>
-                                </div>
-                            </div>
-                            <div class="position-input">
-                                <label>Y Position</label>
-                                <input type="number" id="pos3y" value="1700">
-                                <div class="position-slider">
-                                    <input type="range" id="pos3y-slider" min="0" max="3500" value="1700">
-                                    <span class="position-value">1700</span>
-                                </div>
+                </div>
+                
+                <div class="position-control-group">
+                    <h4>યોગદાન (Donation)</h4>
+                    <div class="position-inputs">
+                        <div class="position-input">
+                            <label>X Position</label>
+                            <input type="number" id="pos4x" value="1177">
+                            <div class="position-slider">
+                                <input type="range" id="pos4x-slider" min="0" max="2000" value="1177">
+                                <span class="position-value">1177</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="position-control-group">
-                        <h4>યોગદાન (Donation)</h4>
-                        <div class="position-inputs">
-                            <div class="position-input">
-                                <label>X Position</label>
-                                <input type="number" id="pos4x" value="1177">
-                                <div class="position-slider">
-                                    <input type="range" id="pos4x-slider" min="0" max="2000" value="1177">
-                                    <span class="position-value">1177</span>
-                                </div>
-                            </div>
-                            <div class="position-input">
-                                <label>Y Position</label>
-                                <input type="number" id="pos4y" value="1700">
-                                <div class="position-slider">
-                                    <input type="range" id="pos4y-slider" min="0" max="3500" value="1700">
-                                    <span class="position-value">1700</span>
-                                </div>
+                        <div class="position-input">
+                            <label>Y Position</label>
+                            <input type="number" id="pos4y" value="1700">
+                            <div class="position-slider">
+                                <input type="range" id="pos4y-slider" min="0" max="3500" value="1700">
+                                <span class="position-value">1700</span>
                             </div>
                         </div>
                     </div>
@@ -399,10 +315,6 @@
             const field1Input = document.getElementById('field1');
             const field3Input = document.getElementById('field3');
             const field4Input = document.getElementById('field4');
-            
-            // Common font controls
-            const commonFontSize = document.getElementById('commonFontSize');
-            const fontSizeValue = commonFontSize.nextElementSibling;
             const fontColorPicker = document.getElementById('fontColor');
             
             // Position controls
@@ -429,15 +341,14 @@
             const pos4xValue = pos4xSlider.nextElementSibling;
             const pos4yValue = pos4ySlider.nextElementSibling;
             
-            // Collapsible position controls
-            const positionHeader = document.getElementById('positionHeader');
-            const positionContent = document.getElementById('positionContent');
-            
             // Buttons
             const downloadBtn = document.getElementById('downloadBtn');
             const formDownloadBtn = document.getElementById('formDownloadBtn');
             const resetBtn = document.getElementById('resetBtn');
             const formResetBtn = document.getElementById('formResetBtn');
+            
+            // Default font size
+            const defaultFontSize = 75;
             
             // Load the certificate image
             const img = new Image();
@@ -453,12 +364,6 @@
                 field3Input.addEventListener('input', function() {
                     const brickCount = parseFloat(field3Input.value) || 0;
                     field4Input.value = (brickCount * 2500).toLocaleString();
-                    drawCertificate();
-                });
-                
-                // Common font size change handler
-                commonFontSize.addEventListener('input', function() {
-                    fontSizeValue.textContent = this.value + 'px';
                     drawCertificate();
                 });
                 
@@ -485,13 +390,6 @@
                 setupPositionSync(pos3y, pos3ySlider, pos3yValue);
                 setupPositionSync(pos4x, pos4xSlider, pos4xValue);
                 setupPositionSync(pos4y, pos4ySlider, pos4yValue);
-                
-                // Toggle position controls
-                positionHeader.addEventListener('click', function() {
-                    positionContent.classList.toggle('show');
-                    this.querySelector('span').textContent = 
-                        positionContent.classList.contains('show') ? '−' : '+';
-                });
                 
                 // Download button click handlers
                 function downloadCertificate() {
@@ -542,10 +440,8 @@
                 
                 function resetAll() {
                     resetForm();
-                    commonFontSize.value = 66;
-                    fontSizeValue.textContent = '66px';
-                    fontColorPicker.value = '#FF0000';
                     resetPositions();
+                    fontColorPicker.value = '#FF0000';
                 }
                 
                 resetBtn.addEventListener('click', resetAll);
@@ -562,23 +458,22 @@
                 // Set text style
                 ctx.fillStyle = fontColorPicker.value;
                 ctx.textAlign = 'left';
-                const fontSize = parseInt(commonFontSize.value);
                 
                 // Draw Field 1
                 if (field1Input.value) {
-                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.font = `bold ${defaultFontSize}px Arial`;
                     ctx.fillText(field1Input.value, parseInt(pos1x.value), parseInt(pos1y.value));
                 }
                 
                 // Draw Field 3
                 if (field3Input.value) {
-                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.font = `bold ${defaultFontSize}px Arial`;
                     ctx.fillText(field3Input.value, parseInt(pos3x.value), parseInt(pos3y.value));
                 }
                 
                 // Draw Field 4
                 if (field4Input.value) {
-                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.font = `bold ${defaultFontSize}px Arial`;
                     ctx.fillText(field4Input.value, parseInt(pos4x.value), parseInt(pos4y.value));
                 }
             }

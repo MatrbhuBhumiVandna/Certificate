@@ -14,7 +14,7 @@
         }
         .main-title {
             text-align: center;
-            color: #FF9933; /* Saffron color */
+            color: #FF9933;
             font-size: 26px;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -103,6 +103,13 @@
         .btn-download:hover {
             background-color: #0b7dda;
         }
+        .btn-reset-font {
+            background-color: #607d8b;
+            color: white;
+        }
+        .btn-reset-font:hover {
+            background-color: #455a64;
+        }
         .btn-reset-all {
             background-color: #f44336;
             color: white;
@@ -122,6 +129,112 @@
             gap: 10px;
             margin-top: 15px;
             justify-content: center;
+        }
+        
+        /* Font Controls */
+        .font-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 6px;
+        }
+        .font-size-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .font-size-control input[type="range"] {
+            width: 100px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            -webkit-appearance: none;
+        }
+        .font-size-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #2196F3;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .font-size-value {
+            width: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .color-picker-container label {
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Position Controls */
+        .position-controls {
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .position-header {
+            background-color: #607d8b;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .position-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .position-header span {
+            font-size: 18px;
+        }
+        .position-content {
+            padding: 15px;
+            background-color: white;
+            display: none;
+        }
+        .position-content.show {
+            display: block;
+        }
+        .position-control-group {
+            margin-bottom: 15px;
+        }
+        .position-control-group h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #444;
+        }
+        .position-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .position-input {
+            flex: 1;
+        }
+        .position-input label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 3px;
         }
         .position-slider {
             display: flex;
@@ -150,49 +263,6 @@
             font-size: 12px;
             color: #666;
         }
-        .position-controls {
-            margin-top: 25px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        .position-control-group {
-            margin-bottom: 15px;
-        }
-        .position-control-group h4 {
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            color: #444;
-        }
-        .position-inputs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-        .position-input {
-            flex: 1;
-        }
-        .position-input label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 3px;
-        }
-        .color-picker-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .color-picker-container label {
-            margin-bottom: 0;
-            font-size: 13px;
-        }
-        .color-picker {
-            width: 30px;
-            height: 30px;
-            padding: 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -217,81 +287,96 @@
                 <input type="text" id="field4" placeholder="Auto-calculated" readonly>
             </div>
 
+            <!-- Font Controls -->
+            <div class="font-controls">
+                <div class="font-size-control">
+                    <label for="commonFontSize">Font Size:</label>
+                    <input type="range" id="commonFontSize" min="20" max="100" value="75">
+                    <span class="font-size-value">75px</span>
+                </div>
+                <div class="color-picker-container">
+                    <label for="fontColor">Color:</label>
+                    <input type="color" id="fontColor" value="#FF0000" class="color-picker">
+                </div>
+            </div>
+
             <div class="form-actions">
                 <div class="form-actions-row">
+                    <button class="btn-reset-font" id="formResetFontBtn">Reset Font Style</button>
                     <button class="btn-reset-all" id="formResetBtn">Reset All Data</button>
-                    <div class="color-picker-container">
-                        <label for="fontColor">Color:</label>
-                        <input type="color" id="fontColor" value="#FF0000" class="color-picker">
-                    </div>
                 </div>
                 <button class="btn-download" id="formDownloadBtn">Download Certificate</button>
             </div>
 
+            <!-- Position Controls (Collapsible) -->
             <div class="position-controls">
-                <h3>Position Adjustment</h3>
-                
-                <div class="position-control-group">
-                    <h4>પૂરું નામ (Full Name)</h4>
-                    <div class="position-inputs">
-                        <div class="position-input">
-                            <label>X Position</label>
-                            <input type="number" id="pos1x" value="430">
-                            <div class="position-slider">
-                                <input type="range" id="pos1x-slider" min="0" max="2000" value="430">
-                                <span class="position-value">430</span>
+                <div class="position-header" id="positionHeader">
+                    <h3>Position Adjustment</h3>
+                    <span>+</span>
+                </div>
+                <div class="position-content" id="positionContent">
+                    <div class="position-control-group">
+                        <h4>પૂરું નામ (Full Name)</h4>
+                        <div class="position-inputs">
+                            <div class="position-input">
+                                <label>X Position</label>
+                                <input type="number" id="pos1x" value="570">
+                                <div class="position-slider">
+                                    <input type="range" id="pos1x-slider" min="0" max="2000" value="570">
+                                    <span class="position-value">570</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="position-input">
-                            <label>Y Position</label>
-                            <input type="number" id="pos1y" value="1540">
-                            <div class="position-slider">
-                                <input type="range" id="pos1y-slider" min="0" max="3500" value="1540">
-                                <span class="position-value">1540</span>
+                            <div class="position-input">
+                                <label>Y Position</label>
+                                <input type="number" id="pos1y" value="1558">
+                                <div class="position-slider">
+                                    <input type="range" id="pos1y-slider" min="0" max="3500" value="1558">
+                                    <span class="position-value">1558</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="position-control-group">
-                    <h4>ઈંટ ની સંખ્યા (Number of Bricks)</h4>
-                    <div class="position-inputs">
-                        <div class="position-input">
-                            <label>X Position</label>
-                            <input type="number" id="pos3x" value="800">
-                            <div class="position-slider">
-                                <input type="range" id="pos3x-slider" min="0" max="2000" value="800">
-                                <span class="position-value">800</span>
+                    
+                    <div class="position-control-group">
+                        <h4>ઈંટ ની સંખ્યા (Number of Bricks)</h4>
+                        <div class="position-inputs">
+                            <div class="position-input">
+                                <label>X Position</label>
+                                <input type="number" id="pos3x" value="849">
+                                <div class="position-slider">
+                                    <input type="range" id="pos3x-slider" min="0" max="2000" value="849">
+                                    <span class="position-value">849</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="position-input">
-                            <label>Y Position</label>
-                            <input type="number" id="pos3y" value="1700">
-                            <div class="position-slider">
-                                <input type="range" id="pos3y-slider" min="0" max="3500" value="1700">
-                                <span class="position-value">1700</span>
+                            <div class="position-input">
+                                <label>Y Position</label>
+                                <input type="number" id="pos3y" value="1695">
+                                <div class="position-slider">
+                                    <input type="range" id="pos3y-slider" min="0" max="3500" value="1695">
+                                    <span class="position-value">1695</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="position-control-group">
-                    <h4>યોગદાન (Donation)</h4>
-                    <div class="position-inputs">
-                        <div class="position-input">
-                            <label>X Position</label>
-                            <input type="number" id="pos4x" value="1177">
-                            <div class="position-slider">
-                                <input type="range" id="pos4x-slider" min="0" max="2000" value="1177">
-                                <span class="position-value">1177</span>
+                    
+                    <div class="position-control-group">
+                        <h4>યોગદાન (Donation)</h4>
+                        <div class="position-inputs">
+                            <div class="position-input">
+                                <label>X Position</label>
+                                <input type="number" id="pos4x" value="1189">
+                                <div class="position-slider">
+                                    <input type="range" id="pos4x-slider" min="0" max="2000" value="1189">
+                                    <span class="position-value">1189</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="position-input">
-                            <label>Y Position</label>
-                            <input type="number" id="pos4y" value="1700">
-                            <div class="position-slider">
-                                <input type="range" id="pos4y-slider" min="0" max="3500" value="1700">
-                                <span class="position-value">1700</span>
+                            <div class="position-input">
+                                <label>Y Position</label>
+                                <input type="number" id="pos4y" value="1694">
+                                <div class="position-slider">
+                                    <input type="range" id="pos4y-slider" min="0" max="3500" value="1694">
+                                    <span class="position-value">1694</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,6 +400,10 @@
             const field1Input = document.getElementById('field1');
             const field3Input = document.getElementById('field3');
             const field4Input = document.getElementById('field4');
+            
+            // Font controls
+            const commonFontSize = document.getElementById('commonFontSize');
+            const fontSizeValue = commonFontSize.nextElementSibling;
             const fontColorPicker = document.getElementById('fontColor');
             
             // Position controls
@@ -346,9 +435,14 @@
             const formDownloadBtn = document.getElementById('formDownloadBtn');
             const resetBtn = document.getElementById('resetBtn');
             const formResetBtn = document.getElementById('formResetBtn');
+            const formResetFontBtn = document.getElementById('formResetFontBtn');
             
-            // Default font size
-            const defaultFontSize = 75;
+            // Collapsible position controls
+            const positionHeader = document.getElementById('positionHeader');
+            const positionContent = document.getElementById('positionContent');
+            
+            // Sample data flag
+            let showingSampleData = true;
             
             // Load the certificate image
             const img = new Image();
@@ -356,14 +450,24 @@
             img.src = 'certificate.png'; // Replace with your image path
             
             img.onload = function() {
-                // Initial draw
-                drawCertificate();
+                // Initial draw with sample data
+                drawCertificate(true);
                 
                 // Real-time updates for all fields
-                field1Input.addEventListener('input', drawCertificate);
+                field1Input.addEventListener('input', function() {
+                    showingSampleData = false;
+                    drawCertificate();
+                });
                 field3Input.addEventListener('input', function() {
+                    showingSampleData = false;
                     const brickCount = parseFloat(field3Input.value) || 0;
                     field4Input.value = (brickCount * 2500).toLocaleString();
+                    drawCertificate();
+                });
+                
+                // Font size change handler
+                commonFontSize.addEventListener('input', function() {
+                    fontSizeValue.textContent = this.value + 'px';
                     drawCertificate();
                 });
                 
@@ -391,6 +495,13 @@
                 setupPositionSync(pos4x, pos4xSlider, pos4xValue);
                 setupPositionSync(pos4y, pos4ySlider, pos4yValue);
                 
+                // Toggle position controls
+                positionHeader.addEventListener('click', function() {
+                    positionContent.classList.toggle('show');
+                    this.querySelector('span').textContent = 
+                        positionContent.classList.contains('show') ? '−' : '+';
+                });
+                
                 // Download button click handlers
                 function downloadCertificate() {
                     const link = document.createElement('a');
@@ -410,45 +521,54 @@
                     field1Input.value = '';
                     field3Input.value = '';
                     field4Input.value = '';
+                    showingSampleData = false;
+                    drawCertificate();
+                }
+                
+                function resetFontStyle() {
+                    commonFontSize.value = 75;
+                    fontSizeValue.textContent = '75px';
+                    fontColorPicker.value = '#FF0000';
                     drawCertificate();
                 }
                 
                 function resetPositions() {
-                    pos1x.value = 430;
-                    pos1y.value = 1540;
-                    pos3x.value = 800;
-                    pos3y.value = 1700;
-                    pos4x.value = 1177;
-                    pos4y.value = 1700;
+                    pos1x.value = 570;
+                    pos1y.value = 1558;
+                    pos3x.value = 849;
+                    pos3y.value = 1695;
+                    pos4x.value = 1189;
+                    pos4y.value = 1694;
                     
-                    pos1xSlider.value = 430;
-                    pos1ySlider.value = 1540;
-                    pos3xSlider.value = 800;
-                    pos3ySlider.value = 1700;
-                    pos4xSlider.value = 1177;
-                    pos4ySlider.value = 1700;
+                    pos1xSlider.value = 570;
+                    pos1ySlider.value = 1558;
+                    pos3xSlider.value = 849;
+                    pos3ySlider.value = 1695;
+                    pos4xSlider.value = 1189;
+                    pos4ySlider.value = 1694;
                     
-                    pos1xValue.textContent = '430';
-                    pos1yValue.textContent = '1540';
-                    pos3xValue.textContent = '800';
-                    pos3yValue.textContent = '1700';
-                    pos4xValue.textContent = '1177';
-                    pos4yValue.textContent = '1700';
+                    pos1xValue.textContent = '570';
+                    pos1yValue.textContent = '1558';
+                    pos3xValue.textContent = '849';
+                    pos3yValue.textContent = '1695';
+                    pos4xValue.textContent = '1189';
+                    pos4yValue.textContent = '1694';
                     
                     drawCertificate();
                 }
                 
                 function resetAll() {
                     resetForm();
+                    resetFontStyle();
                     resetPositions();
-                    fontColorPicker.value = '#FF0000';
                 }
                 
                 resetBtn.addEventListener('click', resetAll);
                 formResetBtn.addEventListener('click', resetAll);
+                formResetFontBtn.addEventListener('click', resetFontStyle);
             };
             
-            function drawCertificate() {
+            function drawCertificate(showSample = false) {
                 // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
@@ -458,22 +578,32 @@
                 // Set text style
                 ctx.fillStyle = fontColorPicker.value;
                 ctx.textAlign = 'left';
+                const fontSize = parseInt(commonFontSize.value);
                 
                 // Draw Field 1
-                if (field1Input.value) {
-                    ctx.font = `bold ${defaultFontSize}px Arial`;
+                if (showSampleData && showSample) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText("Sample Name", parseInt(pos1x.value), parseInt(pos1y.value));
+                } else if (field1Input.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field1Input.value, parseInt(pos1x.value), parseInt(pos1y.value));
                 }
                 
                 // Draw Field 3
-                if (field3Input.value) {
-                    ctx.font = `bold ${defaultFontSize}px Arial`;
+                if (showSampleData && showSample) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText("5", parseInt(pos3x.value), parseInt(pos3y.value));
+                } else if (field3Input.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field3Input.value, parseInt(pos3x.value), parseInt(pos3y.value));
                 }
                 
                 // Draw Field 4
-                if (field4Input.value) {
-                    ctx.font = `bold ${defaultFontSize}px Arial`;
+                if (showSampleData && showSample) {
+                    ctx.font = `bold ${fontSize}px Arial`;
+                    ctx.fillText("12,500", parseInt(pos4x.value), parseInt(pos4y.value));
+                } else if (field4Input.value) {
+                    ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field4Input.value, parseInt(pos4x.value), parseInt(pos4y.value));
                 }
             }

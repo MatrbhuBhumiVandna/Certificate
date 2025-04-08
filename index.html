@@ -422,14 +422,6 @@
             const pos4xSlider = document.getElementById('pos4x-slider');
             const pos4ySlider = document.getElementById('pos4y-slider');
             
-            // Position value displays
-            const pos1xValue = pos1xSlider.nextElementSibling;
-            const pos1yValue = pos1ySlider.nextElementSibling;
-            const pos3xValue = pos3xSlider.nextElementSibling;
-            const pos3yValue = pos3ySlider.nextElementSibling;
-            const pos4xValue = pos4xSlider.nextElementSibling;
-            const pos4yValue = pos4ySlider.nextElementSibling;
-            
             // Buttons
             const downloadBtn = document.getElementById('downloadBtn');
             const formDownloadBtn = document.getElementById('formDownloadBtn');
@@ -441,25 +433,20 @@
             const positionHeader = document.getElementById('positionHeader');
             const positionContent = document.getElementById('positionContent');
             
-            // Sample data flag
-            let showingSampleData = true;
-            
             // Load the certificate image
             const img = new Image();
             img.crossOrigin = 'Anonymous';
             img.src = 'certificate.png'; // Replace with your image path
             
             img.onload = function() {
-                // Initial draw with sample data
-                drawCertificate(true);
+                // Initial draw
+                drawCertificate();
                 
                 // Real-time updates for all fields
                 field1Input.addEventListener('input', function() {
-                    showingSampleData = false;
                     drawCertificate();
                 });
                 field3Input.addEventListener('input', function() {
-                    showingSampleData = false;
                     const brickCount = parseFloat(field3Input.value) || 0;
                     field4Input.value = (brickCount * 2500).toLocaleString();
                     drawCertificate();
@@ -488,12 +475,12 @@
                     });
                 }
                 
-                setupPositionSync(pos1x, pos1xSlider, pos1xValue);
-                setupPositionSync(pos1y, pos1ySlider, pos1yValue);
-                setupPositionSync(pos3x, pos3xSlider, pos3xValue);
-                setupPositionSync(pos3y, pos3ySlider, pos3yValue);
-                setupPositionSync(pos4x, pos4xSlider, pos4xValue);
-                setupPositionSync(pos4y, pos4ySlider, pos4yValue);
+                setupPositionSync(pos1x, pos1xSlider, pos1x.nextElementSibling.querySelector('.position-value'));
+                setupPositionSync(pos1y, pos1ySlider, pos1y.nextElementSibling.querySelector('.position-value'));
+                setupPositionSync(pos3x, pos3xSlider, pos3x.nextElementSibling.querySelector('.position-value'));
+                setupPositionSync(pos3y, pos3ySlider, pos3y.nextElementSibling.querySelector('.position-value'));
+                setupPositionSync(pos4x, pos4xSlider, pos4x.nextElementSibling.querySelector('.position-value'));
+                setupPositionSync(pos4y, pos4ySlider, pos4y.nextElementSibling.querySelector('.position-value'));
                 
                 // Toggle position controls
                 positionHeader.addEventListener('click', function() {
@@ -504,12 +491,47 @@
                 
                 // Download button click handlers
                 function downloadCertificate() {
+                    // Create a temporary canvas with higher resolution
+                    const tempCanvas = document.createElement('canvas');
+                    const tempCtx = tempCanvas.getContext('2d');
+                    
+                    // Set the temporary canvas dimensions
+                    tempCanvas.width = canvas.width;
+                    tempCanvas.height = canvas.height;
+                    
+                    // Draw the current certificate to the temporary canvas
+                    tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+                    
+                    // Set text style
+                    tempCtx.fillStyle = fontColorPicker.value;
+                    tempCtx.textAlign = 'left';
+                    const fontSize = parseInt(commonFontSize.value);
+                    
+                    // Draw Field 1
+                    if (field1Input.value) {
+                        tempCtx.font = `bold ${fontSize}px Arial`;
+                        tempCtx.fillText(field1Input.value, parseInt(pos1x.value), parseInt(pos1y.value));
+                    }
+                    
+                    // Draw Field 3
+                    if (field3Input.value) {
+                        tempCtx.font = `bold ${fontSize}px Arial`;
+                        tempCtx.fillText(field3Input.value, parseInt(pos3x.value), parseInt(pos3y.value));
+                    }
+                    
+                    // Draw Field 4
+                    if (field4Input.value) {
+                        tempCtx.font = `bold ${fontSize}px Arial`;
+                        tempCtx.fillText(field4Input.value, parseInt(pos4x.value), parseInt(pos4y.value));
+                    }
+                    
+                    // Create download link
                     const link = document.createElement('a');
                     const fileName = field1Input.value ? 
                         field1Input.value.replace(/\s+/g, '_') + '_certificate.jpg' : 
                         'certificate.jpg';
                     link.download = fileName;
-                    link.href = canvas.toDataURL('image/jpeg', 0.9);
+                    link.href = tempCanvas.toDataURL('image/jpeg', 0.9);
                     link.click();
                 }
                 
@@ -521,7 +543,6 @@
                     field1Input.value = '';
                     field3Input.value = '';
                     field4Input.value = '';
-                    showingSampleData = false;
                     drawCertificate();
                 }
                 
@@ -547,13 +568,6 @@
                     pos4xSlider.value = 1189;
                     pos4ySlider.value = 1694;
                     
-                    pos1xValue.textContent = '570';
-                    pos1yValue.textContent = '1558';
-                    pos3xValue.textContent = '849';
-                    pos3yValue.textContent = '1695';
-                    pos4xValue.textContent = '1189';
-                    pos4yValue.textContent = '1694';
-                    
                     drawCertificate();
                 }
                 
@@ -568,7 +582,7 @@
                 formResetFontBtn.addEventListener('click', resetFontStyle);
             };
             
-            function drawCertificate(showSample = false) {
+            function drawCertificate() {
                 // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
@@ -581,28 +595,19 @@
                 const fontSize = parseInt(commonFontSize.value);
                 
                 // Draw Field 1
-                if (showSampleData && showSample) {
-                    ctx.font = `bold ${fontSize}px Arial`;
-                    ctx.fillText("Sample Name", parseInt(pos1x.value), parseInt(pos1y.value));
-                } else if (field1Input.value) {
+                if (field1Input.value) {
                     ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field1Input.value, parseInt(pos1x.value), parseInt(pos1y.value));
                 }
                 
                 // Draw Field 3
-                if (showSampleData && showSample) {
-                    ctx.font = `bold ${fontSize}px Arial`;
-                    ctx.fillText("5", parseInt(pos3x.value), parseInt(pos3y.value));
-                } else if (field3Input.value) {
+                if (field3Input.value) {
                     ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field3Input.value, parseInt(pos3x.value), parseInt(pos3y.value));
                 }
                 
                 // Draw Field 4
-                if (showSampleData && showSample) {
-                    ctx.font = `bold ${fontSize}px Arial`;
-                    ctx.fillText("12,500", parseInt(pos4x.value), parseInt(pos4y.value));
-                } else if (field4Input.value) {
+                if (field4Input.value) {
                     ctx.font = `bold ${fontSize}px Arial`;
                     ctx.fillText(field4Input.value, parseInt(pos4x.value), parseInt(pos4y.value));
                 }
